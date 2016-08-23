@@ -3,19 +3,21 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-
 use App\Http\Requests;
-
-class ArticlesController extends Controller
-{
+use App\Http\Controllers\Controller;
+use App\Article;
+use Illuminate\Support\Facades\Validator;
+use Session;
+use Illuminate\Support\Facades\Redirect;
+class ArticlesController extends Controller {
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
-    {
-        //
+    public function index() {
+        $articles = Article::all();
+        return view('articles.index') -> with('articles', $articles);
     }
 
     /**
@@ -23,9 +25,8 @@ class ArticlesController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
-    {
-        //
+    public function create() {
+        return view('articles.create');
     }
 
     /**
@@ -34,9 +35,15 @@ class ArticlesController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
-    {
-        //
+    public function store(Request $request) {
+        $validate = Validator::make($request -> all(), Article::valid());
+        if ($validate -> fails()) {
+            return back() -> withErrors($validate) -> withInput();
+        } else {
+            Article::create($request -> all());
+            Session::flash('notice', 'Success add article');
+            return Redirect::to('articles');
+        }
     }
 
     /**
@@ -45,9 +52,9 @@ class ArticlesController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
-    {
-        //
+    public function show($id) {
+        $article = Article::find($id);
+        return view('articles.show') -> with('article', $article);
     }
 
     /**
@@ -56,9 +63,9 @@ class ArticlesController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
-    {
-        //
+    public function edit($id) {
+        $article = Article::find($id);
+        return view('articles.edit') -> with('article', $article);
     }
 
     /**
@@ -68,9 +75,17 @@ class ArticlesController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
-    {
-        //
+    public function update(Request $request, $id) {
+        $validate = Validator::make($request -> all(), Article::valid($id));
+
+        if ($validate -> fails()) {
+            return back() -> withErrors($validate) -> withInput();
+        } else {
+            $article = Article::find($id);
+            $article -> update($request -> all());
+            Session::flash('notice', 'Success update article');
+            return Redirect::to('articles');
+        }
     }
 
     /**
@@ -79,8 +94,16 @@ class ArticlesController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
-    {
-        //
+    public function destroy($id) {
+        $article = Article::find($id);
+
+        if ($article -> delete()) {
+            Session::flash('notice', 'Article success delete');
+            return Redirect::to('articles');
+        } else {
+            Session::flash('error', 'Article fails delete');
+            return Redirect::to('articles');
+        }
     }
+
 }

@@ -5,7 +5,8 @@
     <meta httpequiv="XUACompatible" content="IE=edge">
     <meta name="viewport" content="width=devicewidth, initialscale=1">
     <title>Articles</title>
-    <link href="/css/bootstrap.css" rel="stylesheet" />
+    <link href="/assets/css/bootstrap.css" rel="stylesheet" />
+    <script src="/assets/js/bootstrap.js"></script>
   </head>
   <body style="padding-top:60px;">
     <!--bagian navigation-->
@@ -13,8 +14,7 @@
     <!-- Bagian Content -->
     <div class="container clearfix">
       <div class="row row-offcanvas row-offcanvas-left ">
-        <!--Bagian Kiri-->
-        @include("shared.left_nav")
+        
         <!--Bagian Kanan-->
         <div id="main-content" class="col-xs-12 col-sm-9 main pull-right">
           <div class="panel-body">
