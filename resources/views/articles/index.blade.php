@@ -1,17 +1,16 @@
-@section("content")
 @extends("layouts.application")
+@section("content")
 <script src="/assets/js/masonry-docs.min.js"></script>
 <div>
   {!! link_to('articles/create', 'Write Article', array('class' => 'btn btn-success')) !!}
 </div>
-
-
-  <div class="grid" data-masonry='{ "itemSelector": ".grid-item", "columnWidth": 100 }'>
-    <div class="grid">
+<div class="grid" data-masonry='{ "itemSelector": ".grid-item", "columnWidth": 100 }'>
+  <div class="grid">
     @foreach ($articles as $article)
     <div class="grid-item">
-    <div>
-      <h1>{{$article->title}}</h1>
+      <div>
+        <h1>{{$article->title}}</h1>
+      </div>
       <p>
         <img src={{$article->image}}>
       </p>
@@ -27,8 +26,7 @@
         {!! Form::close() !!}
       </div>
     </div>
+@endforeach
   </div>
 </div>
-</div>
-@endforeach
 @stop

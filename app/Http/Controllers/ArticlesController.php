@@ -44,6 +44,8 @@ class ArticlesController extends Controller {
             Session::flash('notice', 'Success add article');
             return Redirect::to('articles');
         }
+        $imageName = $product -> id . '.' . $request -> file('image') -> getClientOriginalExtension();
+        $request -> file('image') -> move(base_path() . '/public/upload/', $imageName);
     }
 
     /**
@@ -86,6 +88,10 @@ class ArticlesController extends Controller {
             Session::flash('notice', 'Success update article');
             return Redirect::to('articles');
         }
+    }
+
+    public function __construct() {
+        $this -> beforeFilter('auth');
     }
 
     /**

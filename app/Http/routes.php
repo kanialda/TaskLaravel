@@ -1,5 +1,7 @@
 <?php
 Route::resource('articles', 'ArticlesController');
+Route::resource('users', 'UsersController', array('except' => array('index', 'destroy')));
+Route::resource('sessions', 'SessionsController');
 /*
 |--------------------------------------------------------------------------
 | Application Routes
