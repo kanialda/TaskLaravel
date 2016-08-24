@@ -148,15 +148,21 @@ return [
         Illuminate\Translation\TranslationServiceProvider::class,
         Illuminate\Validation\ValidationServiceProvider::class,
         Illuminate\View\ViewServiceProvider::class,
+        
 
         /*
          * Application Service Providers...
          */
+        
         App\Providers\AppServiceProvider::class,
         App\Providers\AuthServiceProvider::class,
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
-
+        
+        /*
+         *Excel
+         */
+        Maatwebsite\Excel\ExcelServiceProvider::class,
     ],
 
     /*
@@ -171,6 +177,7 @@ return [
     */
 
     'aliases' => [
+        'Excel' => Maatwebsite\Excel\Facades\Excel::class,
         'Input' => Illuminate\Support\Facades\Input::class,
         'Form' => Collective\Html\FormFacade::class,
         'Html' => Collective\Html\HtmlFacade::class,

@@ -13,7 +13,7 @@
 </div>
 
 <div class="form-group">
-    {!! Form::label('image', 'Image', array('class' => 'col-lg-3 control-label')) !!}
+    {!! Form::open(array('url'=>'public/upload','method'=>'POST', 'files'=>true)) !!}
   <div class="col-lg-9">
     {!! Form::file('image',null, array('class' => 'form-control')) !!}
   </div>

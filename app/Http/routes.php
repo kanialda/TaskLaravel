@@ -3,6 +3,7 @@ Route::resource('articles', 'ArticlesController');
 Route::resource('users', 'UsersController', array('except' => array('index', 'destroy')));
 Route::resource('comments', 'CommentsController');
 Route::resource('sessions', 'SessionsController');
+
 /*
  |--------------------------------------------------------------------------
  | Application Routes
@@ -13,6 +14,7 @@ Route::resource('sessions', 'SessionsController');
  | and give it the controller to call when that URI is requested.
  |
  */
+Route::post('/articles/updatepic', 'ArticlesController@UpdatePic');
 Route::get('/reset-password', array('as' => 'reset-password', 'uses' => 'UsersController@reset_password'));
 Route::post('/process-reset-password', array('as' => 'process-reset-password', 'uses' => 'UsersController@process_reset_password'));
 Route::get('/change-password/{forgot_token}', array('as' => 'change-password', 'uses' => 'UsersController@change_password'));
