@@ -1,26 +1,6 @@
 @extends("layouts.application")
 @section("content")
-{!! Form::open(['url' => 'users', 'class' => 'form-horizontal', 'role' => 'form']) !!}
-<div class="form-group">
-  {!! Form::label('email', 'Email', array('class' => 'col-lg-3 control-label')) !!}
-  <div class="col-lg-4">
-    {!! Form::text('email', null, array('class' => 'form-control')) !!}
-    {!! $errors->first('email') !!}
-  </div>
-
-  <div class="clear"></div>
-</div>
-
-<div class="form-group">
-  {!! Form::label('name', 'Username', array('class' => 'col-lg-3 control-label')) !!}
-  <div class="col-lg-4">
-    {!! Form::text('name', null, array('class' => 'form-control')) !!}
-    {!! $errors->first('name') !!}
-  </div>
-  
-  <div class="clear"></div>
-</div>
-
+{!! Form::open(['url' => 'process-change-password/'.$forgot_token, 'class' => 'form-horizontal', 'role' => 'form']) !!}
 <div class="form-group">
   {!! Form::label('password', 'Password', array('class' => 'col-lg-3 control-label')) !!}
   <div class="col-lg-4">
@@ -29,7 +9,6 @@
   </div>
   <div class="clear"></div>
 </div>
-
 <div class="form-group">
   {!! Form::label('password_confirmation', 'Password Confirm', array('class' => 'col-lg-3 control-label')) !!}
   <div class="col-lg-4">
@@ -37,15 +16,13 @@
   </div>
   <div class="clear"></div>
 </div>
-
 <div class="form-group">
   <div class="col-lg-3"></div>
   <div class="col-lg-4">
-    {!! Form::submit('Signup', array('class' => 'btn btn-primary')) !!}
+    {!! Form::submit('Update Password', array('class' => 'btn btn-primary')) !!}
   </div>
   <div class="clear"></div>
 </div>
-
 {!! Form::close() !!}
 
 @stop

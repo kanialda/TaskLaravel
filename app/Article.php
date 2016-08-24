@@ -20,6 +20,7 @@ use Illuminate\Database\Eloquent\Model;
         'author' => 'required'
       );
     }
+
  }
   
   

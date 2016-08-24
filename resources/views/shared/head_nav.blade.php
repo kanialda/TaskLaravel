@@ -45,7 +45,7 @@
         </li>
         @else
         <li>
-          {!! link_to('login', 'Login') !!}
+          {!! link_to('sessions/create', 'Login') !!}
         </li>
         @endif
       </ul>

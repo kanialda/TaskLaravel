@@ -3,8 +3,10 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-
 use App\Http\Requests;
+use Illuminate\Support\Facades\Validator;
+use Auth;
+use App\Session;
 
 class SessionsController extends Controller
 {
@@ -21,9 +23,11 @@ class SessionsController extends Controller
         ->withErrors($validate)
         ->withInput();
     }
+    
+    
 
-    if(Auth::attempt(array('username' => $request->username, 'password' => $request->password), ($request->remember ? true : false))) {
-      Session::flash('notice', 'Login Success,' . $request->username);
+    if(Auth::attempt(array('name' => $request->name, 'password' => $request->password), ($request->remember ? true : false))) {
+      Session::flash('notice', 'Login Success,' . $request->name);
       return Redirect::to('/');
       } else {
         Session::flash('error', 'Login Fails, User or Password is wrong.');
@@ -31,11 +35,15 @@ class SessionsController extends Controller
           ->withInput();
       }
     }
-
+  public function create(){
+        return view('sessions.create');
+    }
   public function destroy($id)
   {
     Auth::logout();
     Session::flash('notice', 'Success Logout');
     return Redirect::to('/');
   }
+  
+ 
 }

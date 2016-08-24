@@ -17,6 +17,7 @@
     {!! $errors->first('password') !!}
   </div>
   <div class="clear"></div>
+  <i>{!! link_to('reset-password/', 'Forgot Password') !!}</i>
 </div>
 
 <div class="form-group">

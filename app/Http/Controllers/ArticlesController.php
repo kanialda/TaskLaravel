@@ -8,7 +8,9 @@ use App\Http\Controllers\Controller;
 use App\Article;
 use Illuminate\Support\Facades\Validator;
 use Session;
+use Input;
 use Illuminate\Support\Facades\Redirect;
+use Illuminate\Auth\Authenticatable;
 class ArticlesController extends Controller {
     /**
      * Display a listing of the resource.
@@ -56,7 +58,8 @@ class ArticlesController extends Controller {
      */
     public function show($id) {
         $article = Article::find($id);
-        return view('articles.show') -> with('article', $article);
+        $comments = Article::find($id) -> comments -> sortBy('Comment.created_at');
+        return view('articles.show') -> with('article', $article) -> with('comments', $comments);
     }
 
     /**
@@ -90,10 +93,6 @@ class ArticlesController extends Controller {
         }
     }
 
-    public function __construct() {
-        $this -> beforeFilter('auth');
-    }
-
     /**
      * Remove the specified resource from storage.
      *
@@ -111,5 +110,7 @@ class ArticlesController extends Controller {
             return Redirect::to('articles');
         }
     }
+// 
+
 
 }

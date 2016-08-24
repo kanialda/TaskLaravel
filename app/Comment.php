@@ -8,9 +8,21 @@ class Comment extends Model {
     protected $fillable = [ 'article_id', 'content', 'user_id' ];
     
     
-    public function article() {
+     public static function valid() {
+
+    return array(
+
+      'content' => 'required'
+
+    );
+
+  }
+
+  public function article() {
+
     return $this->belongsTo('App\Article', 'article_id');
-   }
+
+  }
 
 
 
