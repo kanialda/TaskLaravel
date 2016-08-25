@@ -15,7 +15,7 @@
     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
       <ul class="nav navbar-nav">
         <li class="active">
-          <a href="#">Home<span class="sr-only">(current)</span></a>
+          <a href="/">Home<span class="sr-only">(current)</span></a>
         </li>
         <li>
           <a href="#">Gallery</a>
@@ -26,16 +26,7 @@
       </ul>
 
       <ul class="nav navbar-nav navbar-right">
-        <!-- <form class="navbar-form navbar-left">
-
-          <div class="form-group">
-
-            <input type="text" name="keywords" id="" class="form-control" placeholder="Search">
-          </div>
-          <button type="submit" class="btn btn-default">
-            Submit
-          </button>
-        </form> -->
+        
         <li>
           {!! link_to('users/create', 'Sign up') !!}
         </li>

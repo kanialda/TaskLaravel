@@ -108,5 +108,10 @@ return [
     */
 
     'sendmail' => '/usr/sbin/sendmail -bs',
+    
+    'to' => [
+    'address' => 'kanialisda@gmail.com',
+    'name' => 'Example'
+],
 
 ];

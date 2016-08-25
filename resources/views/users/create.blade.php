@@ -12,10 +12,10 @@
 </div>
 
 <div class="form-group">
-  {!! Form::label('name', 'Username', array('class' => 'col-lg-3 control-label')) !!}
+  {!! Form::label('username', 'Username', array('class' => 'col-lg-3 control-label')) !!}
   <div class="col-lg-4">
-    {!! Form::text('name', null, array('class' => 'form-control')) !!}
-    {!! $errors->first('name') !!}
+    {!! Form::text('username', null, array('class' => 'form-control')) !!}
+    {!! $errors->first('username') !!}
   </div>
   
   <div class="clear"></div>

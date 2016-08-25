@@ -9,7 +9,6 @@
   </div>
   <div class="clear"></div>
 </div>
-
 <div class="form-group">
   {!! Form::label('password', 'Password', array('class' => 'col-lg-3 control-label')) !!}
   <div class="col-lg-4">
@@ -17,9 +16,7 @@
     {!! $errors->first('password') !!}
   </div>
   <div class="clear"></div>
-  <i>{!! link_to('reset-password/', 'Forgot Password') !!}</i>
 </div>
-
 <div class="form-group">
   {!! Form::label('remember', 'Remember Me', array('class' => 'col-lg-3 control-label')) !!}
   <div class="col-lg-4">
@@ -27,7 +24,6 @@
   </div>
   <div class="clear"></div>
 </div>
-
 <div class="form-group">
   <div class="col-lg-3"></div>
   <div class="col-lg-4">
@@ -35,7 +31,40 @@
   </div>
   <div class="clear"></div>
 </div>
-
 {!! Form::close() !!}
 
+<script>
+    $(document).ready(function() {
+    var options = { 
+                beforeSubmit:  showRequest,
+        success:       showResponse,
+        dataType: 'json' 
+        }; 
+    $('body').delegate('#image','change', function(){
+        $('#upload').ajaxForm(options).submit();        
+    }); 
+});     
+function showRequest(formData, jqForm, options) { 
+    $("#validation-errors").hide().empty();
+    $("#output").css('display','none');
+    return true; 
+} 
+function showResponse(response, statusText, xhr, $form)  { 
+    if(response.success == false)
+    {
+        var arr = response.errors;
+        $.each(arr, function(index, value)
+        {
+            if (value.length != 0)
+            {
+                $("#validation-errors").append('<div class="alert alert-error"><strong>'+ value +'</strong><div>');
+            }
+        });
+        $("#validation-errors").show();
+    } else {
+         $("#output").html("<img src='"+response.file+"' />");
+         $("#output").css('display','block');
+    }
+}
+</script>
 @stop

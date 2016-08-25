@@ -1,7 +1,7 @@
 @extends("layouts.application")
 @section("content")
 
-{!! Form::open(['url' => 'articles', 'class' => 'form-horizontal', 'role' => 'form']) !!}
+{!! Form::open(array('url' => 'articles/post', 'files' => 'true', 'class' => 'form-horizontal', 'role' => 'form')) !!}
 
 <div class="form-group">
   {!! Form::label('title', 'Title', array('class' => 'col-lg-3 control-label')) !!}
@@ -13,9 +13,10 @@
 </div>
 
 <div class="form-group">
-    {!! Form::open(array('url'=>'public/upload','method'=>'POST', 'files'=>true)) !!}
+    {!! Form::label('image', 'Image', array('class' => 'col-lg-3 control-label')) !!}
   <div class="col-lg-9">
     {!! Form::file('image',null, array('class' => 'form-control')) !!}
+    {!! $errors->first('title') !!}
   </div>
   <div class="clear"></div>
 </div>

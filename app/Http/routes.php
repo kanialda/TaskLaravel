@@ -14,7 +14,10 @@ Route::resource('sessions', 'SessionsController');
  | and give it the controller to call when that URI is requested.
  |
  */
-Route::post('/articles/updatepic', 'ArticlesController@UpdatePic');
+Route::post('articles/post', 'ArticlesController@store');
+Route::get('excels/getImport', 'ExcelsController@getImport');
+Route::post('excels/postImport', 'ExcelsController@postImport');
+Route::post('excels/export', 'ExcelsController@export');
 Route::get('/reset-password', array('as' => 'reset-password', 'uses' => 'UsersController@reset_password'));
 Route::post('/process-reset-password', array('as' => 'process-reset-password', 'uses' => 'UsersController@process_reset_password'));
 Route::get('/change-password/{forgot_token}', array('as' => 'change-password', 'uses' => 'UsersController@change_password'));

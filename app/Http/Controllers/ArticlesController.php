@@ -9,6 +9,7 @@ use App\Article;
 use Illuminate\Support\Facades\Validator;
 use Session;
 use \Input as Input;
+use Intervention\Image\ImageManagerStatic as Image;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Auth\Authenticatable;
 class ArticlesController extends Controller {
@@ -18,27 +19,22 @@ class ArticlesController extends Controller {
      * @return \Illuminate\Http\Response
      */
     public function index(Request $request) {
-    $articles = Article::paginate(4);//->toJson();
-
-    if ($request::ajax()) {
-
-     $view = (String)view('articles.list')
-
+    if($request->ajax()) {
+        if($request->keywords) {
+        $articles = Article::where('title', 'like', '%'.$request->keywords.'%')
+          ->orWhere('content', 'like', '%'.$request->keywords.'%')
+          ->paginate(2);
+      }
+      $view = (String)view('articles.list')
         ->with('articles', $articles)
-
         ->render();
-
-     return response()->json(['view' => $view]);
-
+        return response()->json(['view' => $view]);
     } else {
-
+      $articles = Article::paginate(2);
       return view('articles.index')
-
         ->with('articles', $articles);
-
     }
     }
-
     /**
      * Show the form for creating a new resource.
      *
@@ -47,6 +43,9 @@ class ArticlesController extends Controller {
     public function create() {
         return view('articles.create');
     }
+    
+    public function __construct() {
+        $this->middleware('auth');}
 
     /**
      * Store a newly created resource in storage.
@@ -55,30 +54,30 @@ class ArticlesController extends Controller {
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request) {
-        $file = array('image' => Input::file('image'));
-        $rules = array('image' => 'required',);
-        $validate = Validator::make($file, $rules, $request -> all(), Article::valid());
+        $validate = Validator::make($request -> all(), array(
+        'title' => 'required|min:5|unique:articles,title',
+        'image' => 'required|mimes:jpg,jpeg,png',
+        'content' => 'required|min:10|unique:articles,content',
+        'author' => 'required'));
         if ($validate -> fails()) {
             return back() -> withErrors($validate) -> withInput();
         } else {
-            if (Input::file('image')->isValid()) {
-                $destinationPath = 'upload'; // upload path
-                $extension = Input::file('image')->getClientOriginalExtension(); // getting image extension
-                $fileName = rand(11111,99999).'.'.$extension; // renameing image
-                Input::file('image')->move($destinationPath, $fileName); // uploading file to given path
-                // sending back with message
-                Session::flash('success', 'Upload successfully'); 
-                return Redirect::to('upload');
-            }
-            else {
-                // sending back with error message.
-                Session::flash('error', 'uploaded file is not valid');
-                return Redirect::to('upload');
-                Article::create($request -> all());
-                Session::flash('notice', 'Success add article');
-                return Redirect::to('articles');
-                }
+            $logo = $request->file('image');
+            $filename  = time() ;
+            $upload = public_path('upload/');
+            $success = $logo->move($upload, $filename);
+            
+            // Image::make($logo->getRealPath())->resize(200, 200)->save($upload);
+            
+            $table = new Article;
+            $table->title = $request->Input('title');
+            $table->image = $filename;
+            $table->content = $request->Input('content');
+            $table->author = $request->Input('author');
+            $table->save();
+            return Redirect::to('articles')->with('$success', 'Data Submitted');
         }
+        return Redirect::to('articles/create')->withErrors('$validate');
         }
 
     /**
@@ -141,13 +140,4 @@ class ArticlesController extends Controller {
             return Redirect::to('articles');
         }
     }
-
-    public function UpdatePic() {
-        if (Form::hasFile('image')) {
-            $file = Form::file('image');
-            $file -> move('/public/upload', $file -> getClientOriginalName());
-            echo '<img src="/public/upload/' . $file -> getClientOriginalName() . '" />';
-        }
-    }
-
 }
